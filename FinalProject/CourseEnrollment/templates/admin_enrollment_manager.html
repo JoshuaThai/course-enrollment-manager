@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Special Enrollment Requests</title>
+     <link href="{% static 'css/admin.css' %}" rel="stylesheet" type="text/css">
+    <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    body {
+      background-image: url('{% static "images/campusFountain.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+        /* Center the div */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+    }
+  </style>
+</head>
+<body>
+<div id="adminBox">
+        <label style="font-size: 28px"><b>Go To:</b></label>
+    <button style="background-color: red" onclick="location.href='{% url 'admin_dashboard' %}'">
+             Go Back</button>
+    <button onclick="location.href='{% url 'admin_course_manager' %}'">
+             Create and Manage Courses</button><br>
+<hr>
+    <h1>Special Enrollment Requests</h1>
+    <p style="font-size: 24px; color: blue">{{ message }}</p>
+<table>
+        <tr>
+            <th>Student Name</th>
+            <th>Course Name</th>
+            <th>Reason(s) for Override Request</th>
+            <th>Status</th>
+        </tr>
+    {% for request in requests %}
+        <tr>
+            <th>{{ request.student.name }}</th>
+            <th>{{ request.course.title }}</th>
+            <th>{{ request.reason }}</th>
+            <th>{{ request.status }}</th>
+        <th>
+            <form method="POST" action="{% url 'admin_enrollment_manager'%}">
+                 {% csrf_token %}
+                  <input type="hidden" name="request_id" value="{{ request.id }}">
+                 <input type="hidden" name="action" value="denied">
+                <button type="submit">Deny</button>
+            </form>
+            </th>
+        <th>
+            <form method="POST" action="{% url 'admin_enrollment_manager'%}">
+                     {% csrf_token %}
+                      <input type="hidden" name="request_id" value="{{ request.id }}">
+                     <input type="hidden" name="action" value="approve">
+                    <button type="submit">Approve</button>
+                </form>
+            </th>
+        </tr>
+    {% endfor %}
+</table>
+</div>
+</body>
+</html>

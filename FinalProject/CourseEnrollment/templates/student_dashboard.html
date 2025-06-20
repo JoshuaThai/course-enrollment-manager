@@ -1,0 +1,50 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/student_dashboard.css' %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Dashboard</title>
+    <style>
+        html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+    </style>
+</head>
+<body>
+    <main class="dashboard-container">
+        <section class="dashboard-card">
+            <header class="dashboard-header">
+                <h1 class="bubble-title">Welcome, {{ name }}!</h1>
+                <p class="role">Role: {{ role }}</p>
+            </header>
+
+            <section class="student-actions">
+                <h2 class="bubble-subtitle">Student Actions</h2>
+                <ul class="actions-list">
+                    <li><a href="{% url 'search_courses' %}">Search for Courses</a></li>
+                    <li><a href="{% url 'course_catalog' %}">Enroll in Courses</a></li>
+                    <li><a href="{% url 'waitlist_status' %}">View Waitlist Status</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+
+                {% if available_courses %}
+                  <h2 class="bubble-subtitle">Courses Available for Override Request</h2>
+                  <ul class="actions-list">
+                    {% for course in available_courses %}
+                      <li>
+                        <strong>{{ course.title }}</strong><br>
+                        <a href="{% url 'request_override' course_id=course.id %}">Submit Override</a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% else %}
+                  <p>You're enrolled in all available courses. 🎉</p>
+                {% endif %}
+            </section>
+        </section>
+    </main>
+</body>
+</html>

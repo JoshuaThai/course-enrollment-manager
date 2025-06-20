@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Office‑Hour Slots</title>
+            <link href="{% static 'css/instructor.css' %}" rel="stylesheet" type="text/css">
+        <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      min-height: 100vh;
+      background-image: url('{% static "images/merrill_hall.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      justify-content: center;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+<div id = "instructorBox">
+    <h1>Your Office‑Hour Slots</h1>
+<form action="{% url 'instructor_dashboard' %}" method="get">
+            <button type="submit" style="background-color: red">Go back</button>
+        </form>
+    <ul>
+        {% for slot in slots %}
+            <li>{{ slot.start_time }} – {{ slot.end_time }}</li>
+        {% empty %}
+            <li>No slots published yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>

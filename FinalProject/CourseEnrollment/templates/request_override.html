@@ -1,0 +1,25 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/request_override.css' %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Request Override</title>
+</head>
+<body>
+    <main class="override-container">
+        <section class="override-card">
+            <h1 class="bubble-title">Request Override for {{ course.title }}</h1>
+
+            <form method="post" class="override-form">
+                {% csrf_token %}
+                <label for="reason">Reason for Override:</label><br>
+                <textarea id="reason" name="reason" rows="5" cols="50" required></textarea><br><br>
+                <button type="submit">Submit Request</button>
+            </form>
+
+            <a href="{% url 'student_dashboard' %}" class="back-link">Back to Dashboard</a>
+        </section>
+    </main>
+</body>
+</html>

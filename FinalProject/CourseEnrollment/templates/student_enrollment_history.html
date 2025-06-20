@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enrollment History</title>
+     <link href="{% static 'css/admin.css' %}" rel="stylesheet" type="text/css">
+    <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    body {
+      background-image: url('{% static "images/campusFountain.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+        /* Center the div */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+    }
+  </style>
+</head>
+<body>
+<div id="adminBox">
+<button style="background-color: red" onclick="location.href='{% url 'admin_student_manager' %}'">
+             Go Back</button>
+    <h1><u>{{ student.name }}'s Enrollment History</u></h1>
+    <p>{{ message }}</p>
+    <form method="POST" action="{% url 'admin_edit_enrollment' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="student_id" value="{{ student.id }}">
+                        <input type="hidden" name="action" value="edit">
+                        <input type="hidden" name="action" value="previousEnrollment">
+                    <button type="submit">✏️ Edit Enrollments</button>
+                    </form>
+
+    <h2>📘 Current Enrollments (within last 119 days)</h2>
+    {% if current_enrollments %}
+        <table>
+            <tr>
+                <th>Course Name</th>
+                <th>Instructor</th>
+                <th>Grade</th>
+                <th>Date Enrolled</th>
+            </tr>
+            {% for enrollment in current_enrollments %}
+            <tr>
+                <td>{{ enrollment.course.title }}</td>
+                <td>{{ enrollment.course.instructor.name }}</td>
+                <td>{{ enrollment.final_grade|default:"In Progress" }}</td>
+                <td>{{ enrollment.date_enrolled }}</td>
+            <td>
+                <form method="POST" action="{% url 'student_enrollment_history' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="student_id" value="{{ student.id }}">
+                    <input type="hidden" name="enrollment_id" value="{{ enrollment.id }}">
+                        <input type="hidden" name="action" value="Drop">
+                    <button type="submit">✏️ Drop enrollment</button>
+                    </form>
+            </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No current enrollments.</p>
+    {% endif %}
+
+    <h2>📕 Past Enrollments (older than 119 days)</h2>
+    {% if past_enrollments %}
+        <table>
+            <tr>
+                <th>Course Name</th>
+                <th>Instructor</th>
+                <th>Grade</th>
+                <th>Date Enrolled</th>
+            </tr>
+            {% for enrollment in past_enrollments %}
+            <tr>
+                <td>{{ enrollment.course.title }}</td>
+                <td>{{ enrollment.course.instructor.name }}</td>
+                <td>{{ enrollment.final_grade|default:"In Progress" }}</td>
+                <td>{{ enrollment.date_enrolled }}</td>
+            <td>
+                <form method="POST" action="{% url 'student_enrollment_history' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="student_id" value="{{ student.id }}">
+                    <input type="hidden" name="enrollment_id" value="{{ enrollment.id }}">
+                        <input type="hidden" name="action" value="Drop">
+                    <button type="submit">✏️ Drop enrollment</button>
+                    </form>
+            </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No past enrollments.</p>
+    {% endif %}
+</div>
+{#    <p><a href="{% url 'student_list' %}">← Back to Student List</a></p>#}
+</body>
+</html>

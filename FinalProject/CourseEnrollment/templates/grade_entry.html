@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Grades for {{ course.name }}</title>
+    <link href="{% static 'css/instructor.css' %}" rel="stylesheet" type="text/css">
+    <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      min-height: 100vh;
+      background-image: url('{% static "images/merrill_hall.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      justify-content: center;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+<div id = "instructorBox">
+    <h1>Grades for {{ course.name }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="enrollment_id" style="font-size:24px"><b>Student:</b></label><br>
+        <select id="enrollment_id" name="enrollment_id" required>
+            {% for e in enrollments %}
+                <option value="{{ e.id }}">{{ e.student.name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="assignment" style="font-size:24px"><b>Assignment Name:</b></label><br>
+        <input id="assignment" name="assignment" placeholder="Assignment name" required><br><br>
+
+        <label for="score" style="font-size:24px"><b>Score:</b></label><br>
+        <input id="score" name="score" placeholder="Score" required><br><br>
+
+        <label for="feedback" style="font-size:24px"><b>Feedback:</b></label><br>
+        <textarea id="feedback" name="feedback" placeholder="Feedback"></textarea><br><br>
+
+        <button type="submit">Save</button>
+    </form>
+    <form action="{% url 'instructor_dashboard' %}" method="get">
+                <button type="submit" style="background-color: red">Go back</button>
+            </form><br>
+</div>
+</body>
+</html>

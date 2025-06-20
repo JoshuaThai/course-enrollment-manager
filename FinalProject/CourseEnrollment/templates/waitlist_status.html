@@ -1,0 +1,34 @@
+{% load static %}
+ <link rel="stylesheet" href="{% static 'css/student_dashboard.css' %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Waitlist Status</title>
+</head>
+<body>
+    <div class="waitlist-page-container">
+        <section class="dashboard-card">
+            <header class="dashboard-header">
+                <h1 class="bubble-title">Your Waitlist Status</h1>
+            </header>
+
+            <section class="waitlist-section">
+                {% if waitlist_entries %}
+                   <ul class="waitlist-list">
+                  {% for item in waitlist_entries %}
+                    <li>{{ item.entry.course.title }} — Position: {{ item.position }}</li>
+                  {% endfor %}
+                </ul>
+                {% else %}
+                    <p class="no-waitlist">You are not on any waitlists currently.</p>
+                {% endif %}
+            </section>
+
+            <div class="back-button-container">
+                <a class="back-button" href="{% url 'student_dashboard' %}">Back to Dashboard</a>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

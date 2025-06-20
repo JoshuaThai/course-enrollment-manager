@@ -1,0 +1,24 @@
+*.xml
+*.iml
+*.pyc
+<<<<<<< HEAD
+*.pyc
+*.pyc
+*.pyc
+*.pyc
+*.pyc
+/FinalProject/FinalProject/__pycache__
+=======
+__pycache__/
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.txt
+.DS_Store
+.env
+.venv/
+<<<<<<< HEAD
+>>>>>>> parent of f6eb553 (Resolved merge conflict in settings.py)
+=======
+>>>>>>> parent of f6eb553 (Resolved merge conflict in settings.py)

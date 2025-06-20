@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Email Sent</title>
+</head>
+<body>
+  <!-- feature 3 confirmation -->
+  <h1>Email Sent</h1>
+  <p>Emails have been sent to {{ recipients|join:", " }}.</p>
+  <a href="{% url 'instructor_dashboard' %}">Back to Dashboard</a>
+</body>
+</html>

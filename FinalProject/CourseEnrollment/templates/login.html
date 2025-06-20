@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+    <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-image: url('{% static "images/Lubar_Entrepreneurship_Center.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+        /* Center the div */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+<div id = "loginBox">
+    <h1 style="font-size: 64px">Login:</h1>
+    <form method="post">
+    {% csrf_token %}
+    <input name = "name" placeholder = "Name">
+        <br><br>
+    <input name = "password" placeholder = "Password" type = "password">
+        <br><br>
+        <br><br>
+    <button type="submit" id="loginButton">Login</button>
+    </form>
+    <p style="color: red">{{ message }}</p>
+    <p>Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
+{# Add a button that redirects you to instructor page#}
+{# Add a button that redirects you to admin page#}
+</div>
+
+</body>
+</html>

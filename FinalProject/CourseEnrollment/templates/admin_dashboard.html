@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrator Dashboard</title>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+    <style>
+        html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+        body {
+      background-image: url('{% static "images/UWM_Mitchell_hall.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+        /* Center the div */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+        #logout{
+    padding: 10px 20px;
+    margin-top: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: black;
+    border-radius: 10px;
+    color:white;
+        }
+        #logout:hover{
+            color:yellow;
+        }
+    </style>
+</head>
+<body>
+{#    <h1>Admin Dashboard</h1>#}
+    <div class="box">
+         <h1 style = "font-size: 64px">Admin Dashboard</h1>
+        <p style = "font-size: 20px">Welcome, {{ name }}!</p>
+        <p style = "font-size: 20px">What will you do today?</p>
+         <button onclick="location.href='{% url 'admin_course_manager' %}'" class = "adminButton">
+             Create and Manage Courses</button> <br><br>
+        <button onclick="location.href='{% url 'admin_enrollment_manager' %}'" class = "adminButton">
+            View Enrollment Requests</button><br><br>
+        <button onclick="location.href='{% url 'admin_student_manager' %}'" class = "adminButton">
+            Manage student accounts & enrollment history</button><br><br>
+        <button onclick="location.href='{% url 'enrollment_report_generator' %}'" class = "adminButton">
+            Generate enrollment report</button><br><br>
+
+        <form action="{% url 'login' %}" method="get">
+            <button id="logout" type="submit" style="background-color: red">Log Out</button>
+        </form>
+    </div>
+    <br>
+{#        <nav>#}
+{#      <a href="{% url 'admin_student_manager' %}">Manage student accounts & enrollment history </a>#}
+{#        <a href="{% url 'enrollment_report_generator' %}">Generate enrollment report </a>#}
+{#  </nav>#}
+</body>
+</html>

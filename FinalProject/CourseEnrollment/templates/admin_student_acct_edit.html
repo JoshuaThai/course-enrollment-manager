@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit {{ student.name }}'s Account</title>
+    <link href="{% static 'css/admin.css' %}" rel="stylesheet" type="text/css">
+    <style>
+        html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    body {
+      background-image: url('{% static "images/campusFountain.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+        /* Center the div */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+        form {
+            margin-top: 20px;
+        }
+        label {
+            font-weight: bold;
+            font-size: 32px;
+            display: block;
+            margin-top: 10px;
+        }
+        input {
+            padding: 5px;
+            width: 300px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 8px 16px;
+        }
+    </style>
+</head>
+<body>
+<div id="adminBox">
+    <h1 style="font-size: 64px">Edit {{ student.name }}'s Account</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="student_id" value="{{ student.id }}">
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{ student.name }}">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{ student.email }}">
+
+        <label for="password">Password:</label>
+        <input type="text" id="password" name="password" value="{{ student.password }}">
+
+        <br>
+        <button type="submit">💾 Save Changes</button>
+    </form>
+
+    <p><a href="{% url 'admin_student_manager' %}">← Back to Student List</a></p>
+    </div>
+</body>
+</html>

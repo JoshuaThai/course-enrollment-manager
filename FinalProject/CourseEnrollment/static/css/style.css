@@ -1,0 +1,63 @@
+/*html{*/
+/*    background-image:*/
+/*            url("FinalProject/CourseEnrollment/static/images/Lubar_Entrepreneurship_Center.jpg");*/
+/*}*/
+body{
+    color: black;
+    text-align: center;
+}
+/* For any element in the Button class*/
+.box{
+    border: 3px solid black;
+    border-radius: 10px;
+    display: inline-block;
+    background: rgba(255,255,255,0.8);
+    padding: 20px;
+
+
+}
+.adminButton{
+     background-color: green;
+     color:white;
+    font-size: 20px;
+    font-weight: bold;
+    border: 5px solid black;
+    border-radius: 10px;
+}
+.adminButton:hover{
+    color: yellow;
+}
+/*LOGIN PAGE CSS*/
+#loginButton{
+    background-color: green;
+    /*color: black;*/
+    font-size: 32px;
+    font-weight: bold;
+    border: 3px solid black;
+    border-radius: 10px;
+}
+
+#loginBox{
+    background: rgba(255,255,255,0.8);
+    /*Box only as big as content*/
+    display: inline-block;
+    border-radius: 10px;
+    /* Center the div */
+    align-items: center;   /* vertical center */
+    justify-content: center;
+}
+
+
+#role{
+    font-size: 32px;
+}
+
+.box button:hover{
+    color: yellow;
+    transform: scale(1.1);
+
+}
+
+input{
+    font-size: 32px;
+}

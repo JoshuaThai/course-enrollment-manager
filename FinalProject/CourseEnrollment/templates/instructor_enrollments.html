@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Enrollments</title>
+    <link href="{% static 'css/instructor.css' %}" rel="stylesheet" type="text/css">
+    <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+  margin: 0;
+  padding: 40px 20px;
+  min-height: 100vh;
+  background-image: url('{% static "images/merrill_hall.jpg" %}');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+<div id = "instructorBox">
+  <!-- feature 1 -->
+    <h1 style="font-size: 48px"><u>Manage Enrollments</u></h1>
+<form action="{% url 'instructor_dashboard' %}" method="get">
+            <button type="submit" style="background-color: red">Go back</button>
+        </form>
+{#    <form action="{% url 'instructor_dashboard' %}" method="get">#}
+{#        <button type="submit" style="background-color: black; font-size: 12px">Go back</button>#}
+{#    </form>#}
+  {% for course in courses %}
+    <h2 style="font-size: 24px">{{ course.code }}: {{ course.title }}</h2>
+    {% if course.enrollments.all %}
+      <table>
+        <tr><th>Student</th><th>Action</th></tr>
+        {% for enrollment in course.enrollments.all %}
+          <tr>
+            <td>{{ enrollment.student.name }}</td>
+            <td>
+              <form method="post" action="{% url 'instructor_enrollments' %}">
+                {% csrf_token %}
+                <input type="hidden" name="enrollment_id" value="{{ enrollment.id }}">
+                <button type="submit" name="action" value="remove">Remove</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p>No students enrolled.</p>
+    {% endif %}
+  {% endfor %}
+</div>
+</body>
+</html>

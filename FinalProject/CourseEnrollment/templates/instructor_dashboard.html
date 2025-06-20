@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Instructor Dashboard</title>
+  <link href="{% static 'css/instructor.css' %}" rel="stylesheet" type="text/css">
+    <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    body {
+      background-image: url('{% static "images/panther_double.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+        /* Center the div */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+    }
+  </style>
+</head>
+<body>
+<div id = "instructorBox">
+    <h1 style = "font-size: 64px"><u>Instructor Dashboard</u></h1>
+  <p style="font-size: 32px">Welcome, {{ name }}!</p>
+
+<nav>
+    <form action="{% url 'instructor_enrollments' %}" method="get" style="display:inline;">
+        <button type="submit">Manage Enrollments</button>
+    </form><br>
+
+    <form action="{% url 'instructor_requests' %}" method="get" style="display:inline;">
+        <button type="submit">Override Requests</button>
+    </form><br>
+
+    <form action="{% url 'instructor_email' %}" method="get" style="display:inline;">
+        <button type="submit">Send Email</button>
+    </form>
+</nav>
+
+
+    <h2><u>Your Courses</u></h2>
+  {% if courses %}
+      <table>
+      <tr>
+          <th> Course Code & Title:</th>
+          <th>Syllabus</th>
+          <th>Number of Seat(s)</th>
+          <th> Edit: </th>
+          <th> Enter/Update Grade(s): </th>
+      </tr>
+      {% for course in courses %}
+          <tr>
+              <td>{{ course.code }}: {{ course.title }}</td>
+              <td>{{ course.syllabus }}</td>
+              <td>{{ course.seat_limit }}</td>
+    {#          [<a href="{% url 'edit_course'     course.id %}">Edit</a>]#}
+              <td><form action="{% url 'edit_course' course.id %}" method="get">
+                    <button type="submit" style="background-color: black; font-size: 12px">Edit</button>
+                </form></td>
+          <td><form action="{% url 'grade-entry' course.id %}" method="get">
+                    <button type="submit" style="background-color: black; font-size: 12px">Enter/Update Grades</button>
+                </form></td>
+          </tr>
+      {% endfor %}
+      </table>
+  {% else %}
+    <p>No courses assigned.</p>
+  {% endif %}
+
+    <h2><u>Office Hours</u></h2>
+<p>
+  <form action="{% url 'office-hours-create' %}" method="get" style="display:inline;">
+    <button type="submit">Publish Office‑Hour Slot</button>
+  </form>
+
+  <form action="{% url 'office-hours' %}" method="get" style="display:inline; margin-left: 10px;">
+    <button type="submit">Manage Slots</button>
+  </form>
+</p>
+
+  <form action="{% url 'login' %}" method="get">
+    <button type="submit" style="background-color: red">Log out</button>
+</form>
+<br>
+</div>
+</body>
+</html>

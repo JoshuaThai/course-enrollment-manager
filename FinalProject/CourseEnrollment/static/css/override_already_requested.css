@@ -1,0 +1,53 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: url('../images/overrideSuccess.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Comic Sans MS', 'Segoe UI', cursive, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.message-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.message-card {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    color: #ffffff;
+    max-width: 600px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+}
+
+.bubble-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffeb3b;
+    text-shadow: 2px 2px 0 #000000;
+    margin-bottom: 20px;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    text-decoration: none;
+    background-color: #ffeb3b;
+    color: black;
+    border-radius: 25px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.back-link:hover {
+    background-color: #fff176;
+    transform: scale(1.05);
+}

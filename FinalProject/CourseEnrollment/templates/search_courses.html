@@ -1,0 +1,42 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/search_courses.css' %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Courses</title>
+</head>
+<body>
+    <div class="search-container">
+        <h1>Search for Courses</h1>
+
+        <form method="get" action="{% url 'search_courses' %}">
+            <label for="q">Search by Title or Code:</label><br>
+            <input type="text" name="q" placeholder="e.g. Math101" value="{{ query }}"><br><br>
+
+            <label for="schedule">Filter by Schedule (e.g. MWF, 10AM):</label><br>
+            <input type="text" name="schedule" placeholder="e.g. TR 2:00" value="{{ schedule }}"><br><br>
+
+            <button type="submit">Search</button>
+        </form>
+
+        <h2>Results:</h2>
+        {% if courses %}
+            <ul>
+                {% for course in courses %}
+                    <li>
+                        <strong>{{ course.code }} - {{ course.title }}</strong><br>
+                        Schedule: {{ course.meeting_times }}<br>
+                        Instructor: {{ course.instructor.fullName }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No courses found matching your filters.</p>
+        {% endif %}
+
+        <br>
+        <a href="{% url 'student_dashboard' %}">← Back to Dashboard</a>
+    </div>
+</body>
+</html>

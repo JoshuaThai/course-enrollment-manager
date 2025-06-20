@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Course {{ course.code }}</title>
+    <link href="{% static 'css/instructor.css' %}" rel="stylesheet" type="text/css">
+        <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      min-height: 100vh;
+      background-image: url('{% static "images/merrill_hall.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      justify-content: center;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+<div id = "instructorBox">
+      <!-- feature 4 -->
+      <h1>Edit Course {{ course.code }}: {{ course.title }}</h1>
+      <form method="post" action="{% url 'edit_course' course.id %}">
+        {% csrf_token %}
+        <label for="syllabus" style="font-size:24px"><b>Syllabus:</b></label><br>
+        <textarea name="syllabus" id="syllabus" cols="40" rows="5">{{ course.syllabus }}</textarea><br><br>
+          <label for="meeting_times" style="font-size:24px"><b>Meeting Times:</b></label>
+        <input type="text" name="meeting_times" id="meeting_times" value="{{ course.meeting_times }}"><br><br>
+          <label for="seat_limit" style="font-size:24px"><b>Seat Limit:</b></label>
+        <input type="number" name="seat_limit" id="seat_limit" value="{{ course.seat_limit }}"><br>
+        <button type="submit">Update</button>
+      </form>
+    <form action="{% url 'instructor_dashboard' %}" method="get">
+            <button type="submit" style="background-color: red">Go back</button>
+        </form>
+</div>
+</body>
+</html>

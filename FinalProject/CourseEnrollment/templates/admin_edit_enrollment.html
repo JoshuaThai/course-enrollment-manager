@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Enrollments for {{ student.name }}</title>
+    <link href="{% static 'css/admin.css' %}" rel="stylesheet" type="text/css">
+    <style>
+           html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    body {
+      background-image: url('{% static "images/campusFountain.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+        /* Center the div */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+    }
+
+        table, th, td {
+            border: 1px solid black;
+            padding: 10px;
+            border-collapse: collapse;
+        }
+        input {
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div id="adminBox">
+    <h1><u>Edit Enrollments for {{ student.name }}</u></h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th>Course</th>
+                <th>Final Grade</th>
+                <th>Date Enrolled</th>
+            </tr>
+            {% for enrollment in enrollments %}
+            <tr>
+                <td>{{ enrollment.course.title }}</td>
+                <td>
+                    <input type="text" name="grade_{{ enrollment.id }}" value="{{ enrollment.final_grade }}">
+                </td>
+                <td>
+                    <input type="date" name="date_{{ enrollment.id }}" value="{{ enrollment.date_enrolled }}">
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <!-- Include student ID to persist identity -->
+        <input type="hidden" name="student_id" value="{{ student.id }}">
+
+        <br>
+        <button type="submit">💾 Save Changes</button>
+    </form>
+
+{#    <p><a href="{% url 'student_enrollment_history' %}">← Back to Enrollment History</a></p>#}
+<form method="post" action="{% url 'admin_edit_enrollment' %}">
+    {% csrf_token %}
+    <input type="hidden" name="student_id" value="{{ student.id }}">
+    <input type="hidden" name="action" value="go_back">
+            <button type="submit" style="background-color: red">Go back</button>
+        </form>
+</div>
+</body>
+</html>

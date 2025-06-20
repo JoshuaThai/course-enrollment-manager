@@ -1,0 +1,74 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: url('../images/complex.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Comic Sans MS', 'Segoe UI', cursive, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.override-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.override-card {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+    text-align: center;
+    color: #ffffff;
+    max-width: 600px;
+}
+
+.bubble-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ffeb3b;
+    text-shadow: 3px 3px 0 #000000;
+    margin-bottom: 20px;
+}
+
+.override-form textarea {
+    width: 90%;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: none;
+    resize: none;
+}
+
+.override-form button {
+    background-color: #ffeb3b;
+    border: none;
+    padding: 10px 20px;
+    color: black;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.override-form button:hover {
+    background-color: #fff176;
+    transform: scale(1.05);
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #ffeb3b;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Course Catalog</title>
+         <link href="{% static 'css/course_catalog_stylesheet.css' %}" rel="stylesheet" type="text/css">
+    <style>
+    table, th, td {
+    border:3px solid black;
+        padding: 10px;
+    font-family: Verdana, sans-serif;
+    }
+table{
+    border:1px solid black;
+     /*width: 250px;*/
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.35);
+    /*text-align: center;*/
+    background-color: whitesmoke;
+    border-radius: 10px;
+}
+  </style>
+</head>
+<body>
+    <h1>Course Catalog</h1>
+    <p style="font-size: 24px; color: blue">{{ message }}</p>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Code</th>
+            <th>Syllabus</th>
+            <th>Prerequisites</th>
+            <th>Meeting Time(s)</th>
+            <th>Instructor</th>
+            <th>Seat Limit</th>
+            <th>Number of Students Enrolled</th>
+            <th>Waitlist Utilized</th>
+            <th>Enroll</th>
+        </tr>
+{#        We are going to load in courses through a for loop like in lab. #}
+        {% for course in courses %}
+        <tr>
+            <td>{{ course.title }}</td>
+            <td>{{ course.code }}</td>
+            <td>{{ course.syllabus }}</td>
+            <td>{% if course.prerequisites.all %}
+                {% for prereq in course.prerequisites.all %}
+                    <p>{{ prereq.code }} - {{ prereq.title }}</p>
+                {% endfor %}
+        {% else %}
+            <p>No prerequisites set. Open to all students.</p>
+        {% endif %} </td>
+            <td>{{ course.meeting_times }}</td>
+            <td>{{ course.instructor.name }}</td>
+            <td>{{ course.seat_limit }}</td>
+            <td>{{ course.enrollments.count }}</td>
+            <td>{{ course.waitlist_enabled }}</td>
+            <td>
+                <form method="post" action="{% url 'course_catalog' %}">
+                {% csrf_token %}
+                <input type="hidden" name="course_id" value="{{ course.id }}">
+                <button type="submit" class="enroll-btn">Enroll</button>
+  </form></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h1>Class(s) that you are currently enrolled in: </h1>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Code</th>
+            <th>Syllabus</th>
+            <th>Prerequisites</th>
+            <th>Meeting Time(s)</th>
+            <th>Instructor</th>
+            <th>Seat Limit</th>
+            <th>Number of Students Enrolled</th>
+        </tr>
+{#        We are going to load in courses through a for loop like in lab. #}
+        {% for enrollment in enrollments %}
+        <tr>
+            <td>{{ enrollment.course.title }}</td>
+            <td>{{ enrollment.course.code }}</td>
+            <td>{{ enrollment.course.syllabus }}</td>
+            <td>
+                {% if enrollment.course.prerequisites.all %}
+                    {% for prereq in enrollment.course.prerequisites.all %}
+                        <p>{{ prereq.code }} - {{ prereq.title }}</p>
+                    {% endfor %}
+                {% else %}
+            <p>No prerequisites set. Open to all students.</p>
+                {% endif %}
+            <td>{{ enrollment.course.meeting_times }}</td>
+            <td>{{ enrollment.course.instructor.name }}</td>
+            <td>{{ enrollment.course.seat_limit }}</td>
+            <td>{{ enrollment.course.enrollments.count  }}</td>
+        <td>
+                <form method="post" action="{% url 'course_catalog' %}">
+                {% csrf_token %}
+                    <input type="hidden" name="action" value="drop">
+                <input type="hidden" name="course_id" value="{{ enrollment.course.id }}">
+                <button type="submit" class="enroll-btn">Drop</button>
+  </form></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <button onclick="location.href='{% url 'student_dashboard' %}'" class = "redirect-btn">
+             Back to Dashboard</button>
+
+</body>
+</html>

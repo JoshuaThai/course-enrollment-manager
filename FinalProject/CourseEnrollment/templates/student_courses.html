@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Enrolled Courses</title>
+</head>
+<body>
+    <h1>My Courses</h1>
+
+    {% if enrollments %}
+        <ul>
+            {% for enrollment in enrollments %}
+                <li>
+                    {{ enrollment.course.title }}
+                    <form action="{% url 'drop_course' enrollment.course.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Drop</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You are not enrolled in any courses yet.</p>
+    {% endif %}
+
+    <a href="{% url 'student_dashboard' %}">Back to Dashboard</a>
+</body>
+</html>

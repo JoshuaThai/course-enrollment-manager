@@ -1,0 +1,17 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/override_already_requested.css' %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Override Already Requested</title>
+</head>
+<body>
+    <main class="message-container">
+        <section class="message-card">
+            <h1 class="bubble-title">You have already requested an override for {{ course.title }}.</h1>
+            <a href="{% url 'student_dashboard' %}" class="back-link">Back to Dashboard</a>
+        </section>
+    </main>
+</body>
+</html>

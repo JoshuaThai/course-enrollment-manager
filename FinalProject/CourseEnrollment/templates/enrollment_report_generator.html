@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enrollment Report</title>
+<link href="{% static 'css/admin.css' %}" rel="stylesheet" type="text/css">
+    <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    body {
+      background-image: url('{% static "images/campusFountain.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+        /* Center the div */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+    }
+  </style>
+</head>
+<body>
+<div id="adminBox">
+<label style="font-size: 28px"><b>Go To:</b></label>
+    <button style="background-color: red" onclick="location.href='{% url 'admin_dashboard' %}'">
+             Go Back</button>
+    <button onclick="location.href='{% url 'admin_course_manager' %}'">
+             Create and Manage Courses</button><br>
+<button onclick="location.href='{% url 'admin_enrollment_manager' %}'">
+             View Enrollment Requests</button><br>
+<button onclick="location.href='{% url 'admin_student_manager' %}'">
+             Manage Student Accounts & Enrollment History</button><br>
+<hr>
+    <h1><u>Enrollment Report:</u></h1>
+    <p>Don't have time to read this whole report? Download it as a PDF or print to view at later time!</p>
+    <button onclick="window.print()">🖨️ Print or Save as PDF</button>
+    <h2>Enrollment numbers:</h2>
+    <h3>Number of total students enrolled: {{ total_students }}</h3>
+    <h3>Number of total course enrollments: {{ total_enrollments }}</h3>
+    <p>Total course enrollments is the total sum of all course enrollments across all course in the university.<br>
+    Ex.) if a university has only one student in total, and they are enrolled into two courses. <br>That is two enrollments.</p>
+    <h2>Course Statistics</h2>
+    <h3>Most Popular Course: {{ top_course }}</h3>
+    <h3><u>Enrollment By Course (from popular to least popular:</u></h3>
+    <ol>
+        {% for course in enrollments_by_course %}
+            <li>{{ course.name }}</li>
+        {% endfor %}
+    </ol>
+    <h3><u>Enrollment By Month:</u></h3>
+    <table>
+        <tr>
+            <th>Month:</th>
+            <th>Total:</th>
+        </tr>
+        {% for row in enrollments_by_month %}
+            <tr>
+            <td>{{ row.month }}</td>
+            <td>{{ row.total }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+</div>
+</body>
+</html>

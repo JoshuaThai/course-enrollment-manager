@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Manager</title>
+ <link href="{% static 'css/admin.css' %}" rel="stylesheet" type="text/css">
+    <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    body {
+      background-image: url('{% static "images/campusFountain.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+        /* Center the div */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+    }
+  </style>
+</head>
+<body>
+{#{% csrf_token %}#}
+<div id="adminBox">
+    <label style="font-size: 28px">Go To:</label>
+    <button style="background-color: red" onclick="location.href='{% url 'admin_dashboard' %}'">
+             Go Back</button>
+    <button onclick="location.href='{% url 'admin_enrollment_manager' %}'">
+             View Enrollment Requests</button><br>
+    <button onclick="location.href='{% url 'admin_student_manager' %}'">
+             Manage Student Accounts & Enrollment History</button>
+    <button onclick="location.href='{% url 'enrollment_report_generator' %}'">
+             Generate Enrollment Report</button>
+    <br>
+
+<hr>
+    <h1>Course Manager</h1>
+    <p style="font-size: 24px; color: blue">{{ message }}</p>
+<button onclick="location.href='{% url 'admin_add_course' %}'">
+             Add Course</button>
+    <br><br>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Code</th>
+            <th>Syllabus</th>
+            <th>Prerequisites</th>
+            <th>Meeting Time(s)</th>
+            <th>Instructor</th>
+            <th>Seat Limit</th>
+            <th>Waitlist Utilized?</th>
+        </tr>
+{#        We are going to load in courses through a for loop like in lab. #}
+        {% for course in courses %}
+        <tr>
+        <td>{{ course.id }}</td>
+            <td>{{ course.title }}</td>
+        <td>{{ course.code }}</td>
+        <td>{{ course.syllabus }}</td>
+            <td>{% if course.prerequisites.all %}
+                {% for prereq in course.prerequisites.all %}
+                    <p>{{ prereq.code }} - {{ prereq.title }}</p>
+                {% endfor %}
+        {% else %}
+            <p>No prerequisites set. Open to all students.</p>
+        {% endif %} </td>
+        <td>{{ course.meeting_times }}</td>
+        <td>{{ course.instructor.name }}</td>
+        <td>{{ course.seat_limit }}</td>
+        <td>{{ course.waitlist_enabled }}</td>
+        <td>
+             <form method="POST" action="{% url 'admin_course_manager'%}">
+                 {% csrf_token %}
+                  <input type="hidden" name="course_id" value="{{ course.code }}">
+                 <input type="hidden" name="action" value="edit">
+                <button type="submit">Edit</button>
+            </form>
+        </td>
+        <td>
+            <form method="POST" action="{% url 'admin_course_manager'%}">
+                 {% csrf_token %}
+                  <input type="hidden" name="course_id" value="{{ course.code }}">
+                <input type="hidden" name="action" value="delete">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
+</html>

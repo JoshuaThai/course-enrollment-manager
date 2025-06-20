@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Override Requests</title>
+    <link href="{% static 'css/instructor.css' %}" rel="stylesheet" type="text/css">
+    <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      min-height: 100vh;
+      background-image: url('{% static "images/merrill_hall.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      justify-content: center;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+<div id = "instructorBox">
+  <!-- feature 2 -->
+    <h1 style="font-size: 64px"><u>Override Requests</u></h1>
+<form action="{% url 'instructor_dashboard' %}" method="get">
+            <button type="submit" style="background-color: red">Go back</button>
+        </form><br>
+  {% if requests %}
+    <table>
+      <tr><th>Student</th><th>Course</th><th>Reason</th><th>Action</th></tr>
+      {% for req in requests %}
+        <tr>
+          <td>{{ req.student.name }}</td>
+          <td>{{ req.course.code }}</td>
+          <td>{{ req.reason }}</td>
+          <td>
+            <form method="post" action="{% url 'instructor_requests' %}">
+              {% csrf_token %}
+              <input type="hidden" name="request_id" value="{{ req.id }}">
+              <button type="submit" name="action" value="approve">Approve</button>
+              <button type="submit" name="action" value="deny">Deny</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>No pending requests.</p>
+  {% endif %}
+</div>
+</body>
+</html>

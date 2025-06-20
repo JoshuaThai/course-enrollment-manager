@@ -1,0 +1,52 @@
+body{
+    color: black;
+    text-align: center;
+}
+
+#adminBox{
+  background-color: rgba(255, 255, 255, 0.75);
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 90vw;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    max-height: 90vh; /* This makes it scrollable */
+    overflow-y: auto;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: black;
+    border-radius: 10px;
+    color:white;
+}
+
+#adminBox button:hover{
+    color:yellow;
+    transform: scale(1.1);
+}
+
+/*button:hover{*/
+/*    color:yellow;*/
+/*    transform: scale(1.1);*/
+/*}*/
+
+table, th, td {
+    border:3px solid black;
+        padding: 10px;
+    font-family: Verdana, sans-serif;
+    }
+table{
+    border:1px solid black;
+     /*width: 250px;*/
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.35);
+    /*text-align: center;*/
+    background-color: whitesmoke;
+    border-radius: 10px;
+}
+
+.choices{
+    font-weight: normal;
+}

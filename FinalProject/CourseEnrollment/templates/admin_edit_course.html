@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Course</title>
+    <link href="{% static 'css/admin.css' %}" rel="stylesheet" type="text/css">
+    <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    body {
+      background-image: url('{% static "images/campusFountain.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+        /* Center the div */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+    }
+
+    label{
+        font-size: 24px;
+    font-weight: bolder;
+    }
+  </style>
+</head>
+<body>
+<div id="adminBox">
+    <h1 style="font-size: 64px"><u>Edit Course</u></h1>
+    <form method="POST">
+    {% csrf_token %}
+    <p>{{ message }}</p>
+    <label>Code:</label>
+    <input type="text" name="course_code" value="{{ course.code }}"><br><br>
+ <label>Title:</label>
+    <input type="text" name="title" value="{{ course.title }}"><br><br>
+{#    <input type="text" name="code" value="{{ course.code }}"><br>#}
+    <label>Syllabus:</label>
+    <textarea name="syllabus">{{ course.syllabus }}</textarea><br><br>
+    <label>Meeting Times:</label>
+    <input type="text" name="meeting_times" value="{{ course.meeting_times }}"><br><br>
+        <label>Instructor:</label>
+        <input type="text" name="instructor_name" value="{{ course.instructor.name }}"><br><br>
+    <label>
+    <input type="checkbox" name="waitlist_enabled"
+           {% if course.waitlist_enabled %}checked{% endif %}>
+    Enable Waitlist for This Course
+</label><br><br>
+    <label>Seat Limit:</label>
+    <input type="number" name="seat_limit" value="{{ course.seat_limit }}"><br><br>
+        <label for="prerequisites"><u>Select Prerequisites:</u></label><br><br>
+{% for c in all_courses %}
+    {% if c != course %}
+        <label class="choices">
+            <input type="checkbox" name="prerequisites" value="{{ c.id }}"
+                {% if c in course.prerequisites.all %}checked{% endif %}>
+            {{ c.code }} - {{ c.title }}
+        </label><br>
+    {% endif %}
+{% endfor %}
+    <button type="submit">Save Changes</button>
+        </form>
+<form action="{% url 'admin_course_manager' %}" method="get">
+            <button type="submit" style="background-color: red">Go back</button>
+        </form>
+</div>
+</body>
+</html>
