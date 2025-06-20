@@ -1,4 +1,4 @@
-# Course Enrollment Manager <br/>(Final project for Introduction to Software Engineering course)
+# Course Enrollment Manager <br/>(Final project for Introduction to Software Engineering course at the University of Wisconsin - Milwaukee)
 ## Project Description:
 Each semester, students enroll in courses based on availability, prerequisites, and scheduling 
 preferences. The university's current enrollment process involves multiple platforms, including 
